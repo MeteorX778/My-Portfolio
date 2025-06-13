@@ -109,6 +109,8 @@ h6 {
 
 .skull-loader {
   animation: bounce 1.4s infinite ease-in-out both;
+  height: 40px;
+  width: 40px;
 }
 
 @keyframes bounce {
