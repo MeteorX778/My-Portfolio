@@ -109,8 +109,6 @@ h6 {
 
 .skull-loader {
   animation: bounce 1.4s infinite ease-in-out both;
-  height: 40x;
-  width: 40px;
 }
 
 @keyframes bounce {
@@ -1397,6 +1395,40 @@ h6 {
 }
 
 @media (max-width: 768px) {
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none;
+  }
+
+  /* Fix hero section overlapping */
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 120px 0 60px;
+  }
+
+  .hero-content {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .glitch {
+    font-size: 3rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .wanted-poster {
+    width: 250px;
+    margin: 0 auto;
+  }
+
   .nav-list {
     display: none;
     position: absolute;
@@ -1444,7 +1476,7 @@ h6 {
   }
 
   .glitch {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .hero-subtitle {
@@ -1463,6 +1495,30 @@ h6 {
   .project-card {
     max-width: 300px;
     margin: 0 auto;
+  }
+
+  .wanted-poster {
+    width: 220px;
+    padding: 15px;
+  }
+
+  .avatar-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .wanted-header {
+    font-size: 2rem;
+  }
+
+  .wanted-name {
+    font-size: 1.2rem;
+  }
+
+  /* Fix for custom cursor on mobile */
+  .cursor,
+  .cursor-follower {
+    display: none;
   }
 }
 
