@@ -1,1 +1,2 @@
 # My-Portfolio
+This is a personal portfolio website crafted by me to showcase everything about who I am — my journey, my projects, and my skills. Built with a clean, responsive design, the site features sections like About Me, Skills, Projects, Experience, and Contact. It highlights my expertise in frontend development, including HTML, CSS, JavaScript, UI/UX, and responsive design, along with my passion for coding, gaming, and anime. The portfolio serves as a digital reflection of my personality and technical growth.
