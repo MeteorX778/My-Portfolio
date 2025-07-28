@@ -1646,7 +1646,7 @@ h6 {
   .hero-content {
     flex-direction: column-reverse;
     gap: 30px;
-  }
+  } 
 
   .hero-text {
     text-align: center;
