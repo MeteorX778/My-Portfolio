@@ -1,3 +1,59 @@
+/* Scroll Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-in.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide-in-left.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide-in-right.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scale-in {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scale-in.animate {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.rotate-in {
+  opacity: 0;
+  transform: rotate(-10deg) scale(0.8);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.rotate-in.animate {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
 /* Base Styles */
 :root {
   --primary: #000000;
@@ -930,8 +986,8 @@ h6 {
 
 .devil-fruit {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 60px;  /* Reduced from 80px */
+  height: 60px; /* Reduced from 80px */
   margin: 0 auto 15px;
   border-radius: 50%;
   background-color: var(--card-bg);
@@ -1019,6 +1075,16 @@ h6 {
 .godot-icon {
   color: #478cbf;
   background-color: rgba(71, 140, 191, 0.1);
+}
+
+.svelte-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.svelte-icon {
+  background-color: rgba(255, 62, 0, 0.1);
 }
 
 /* Contact Section */
@@ -1452,6 +1518,9 @@ h6 {
 
   .menu-toggle {
     display: flex;
+    margin-left: 0;
+    margin-right: 20px;
+    /* You can adjust margin-right as needed */
   }
 
   .menu-toggle.active .bar:nth-child(1) {
@@ -1470,9 +1539,27 @@ h6 {
     flex-direction: column;
     gap: 20px;
   }
+
+  /* Fade out developer text when scrolling/touching header */
+  .header {
+    transition: background-color 0.3s;
+  }
+
+  .header.scrolled ~ .hero .glitch {
+    opacity: 0.2;
+    transition: opacity 0.3s;
+  }
+
+  .hero .glitch {
+    transition: opacity 0.3s;
+  }
 }
 
 @media (max-width: 576px) {
+  .menu-toggle {
+    margin-right: 10px;
+  }
+
   .section-title {
     font-size: 2rem;
   }
@@ -1521,6 +1608,171 @@ h6 {
   .cursor,
   .cursor-follower {
     display: none;
+  }
+}
+/* Media Queries */
+@media (max-width: 992px) {
+  .hero-content {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .about-content {
+    flex-direction: column;
+  }
+
+  .contact-content {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none;
+  }
+
+  /* Fix hero section overlapping */
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 120px 0 60px;
+  }
+
+  .hero-content {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .glitch {
+    font-size: 3rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .wanted-poster {
+    width: 250px;
+    margin: 0 auto;
+  }
+
+  .nav-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--background);
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border-bottom: 2px solid var(--primary);
+    z-index: 10;
+  }
+
+  .nav-list.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+    margin-left: 0;
+    margin-right: 100px;
+    /* You can adjust margin-right as needed */
+  }
+
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  .about-stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .menu-toggle {
+    margin-right: 10px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .glitch {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    padding: 10px 20px;
+  }
+
+  .about-subtitle,
+  .skills-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .project-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .wanted-poster {
+    width: 220px;
+    padding: 15px;
+  }
+
+  .avatar-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .wanted-header {
+    font-size: 2rem;
+  }
+
+  .wanted-name {
+    font-size: 1.2rem;
+  }
+
+  /* Fix for custom cursor on mobile */
+  .cursor,
+  .cursor-follower {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    margin-right: 4vw; /* Move it away from the right edge */
+  }
+}
+@media (max-width: 576px) {
+  .menu-toggle {
+    margin-right: 8vw; /* More space on smaller screens */
   }
 }
 
@@ -1641,3 +1893,787 @@ h6 {
     margin: 0 auto;
   }
 }
+
+/* Certificates Section */
+.certificates {
+  position: relative;
+  padding: 100px 0;
+  background-color: var(--card-bg);
+}
+
+.certificates-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.certificate-carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+.certificate-container {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.certificate-card {
+  position: absolute;
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--background);
+  border: 3px solid var(--primary);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateX(100px) scale(0.8);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.certificate-card.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 2;
+}
+
+.certificate-card.prev {
+  opacity: 0.3;
+  transform: translateX(-100px) scale(0.8);
+  z-index: 1;
+}
+
+.certificate-card.next {
+  opacity: 0.3;
+  transform: translateX(100px) scale(0.8);
+  z-index: 1;
+}
+
+.certificate-image {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Fixed height for consistency */
+  overflow: hidden;
+  border-radius: 8px;
+  border: 2px solid var(--primary);
+}
+
+.cert-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Changed from 'cover' to 'contain' */
+  background-color: var(--card-bg); /* Add background color */
+  transition: transform 0.3s ease;
+}
+
+/* Adjust for mobile screens */
+@media (max-width: 768px) {
+  .certificate-image {
+    height: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  .certificate-image {
+    height: 200px;
+  }
+}
+
+.certificate-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--primary);
+  color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.certificate-info {
+  padding: 30px;
+  text-align: center;
+}
+
+.cert-title {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-family: "Permanent Marker", cursive;
+  letter-spacing: 1px;
+}
+
+.cert-issuer {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.cert-date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-family: "Permanent Marker", cursive;
+}
+
+.certificate-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.cert-nav-btn {
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  color: var(--accent);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.cert-nav-btn:hover {
+  background-color: var(--secondary);
+  transform: scale(1.1);
+}
+
+.cert-nav-btn:active {
+  transform: scale(0.95);
+}
+
+.cert-indicators {
+  display: flex;
+  gap: 15px;
+}
+
+.indicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid var(--primary);
+}
+
+.indicator.active {
+  background-color: var(--primary);
+  transform: scale(1.2);
+}
+
+.indicator:hover {
+  background-color: var(--secondary);
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+/* Responsive certificates */
+@media (max-width: 768px) {
+  .certificate-card {
+    max-width: 90%;
+  }
+
+  .certificate-image {
+    height: 200px;
+  }
+
+  .certificate-info {
+    padding: 20px;
+  }
+
+  .cert-title {
+    font-size: 1.4rem;
+  }
+
+  .certificate-navigation {
+    gap: 20px;
+  }
+
+  .cert-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+/* Experience Section */
+.experience {
+  position: relative;
+  padding: 100px 0;
+  background-color: var(--background);
+}
+
+.experience-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.experience-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.experience-timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--primary),
+    var(--primary) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  transform: translateX(-50%);
+}
+
+.experience-item {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+}
+
+.experience-item:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.experience-date {
+  flex: 0 0 150px;
+  text-align: center;
+  background-color: var(--primary);
+  color: var(--accent);
+  padding: 15px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.experience-date::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: var(--primary);
+  border: 3px solid var(--background);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.experience-item:nth-child(odd) .experience-date::after {
+  right: -40px;
+}
+
+.experience-item:nth-child(even) .experience-date::after {
+  left: -40px;
+}
+
+.year {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: "Permanent Marker", cursive;
+}
+
+.duration {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.experience-card {
+  flex: 1;
+  background-color: var(--card-bg);
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.experience-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--glow);
+}
+
+.company-logo {
+  width: 60px;
+  height: 60px;
+  background-color: var(--primary);
+  color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.experience-info {
+  flex: 1;
+}
+
+.job-title {
+  font-size: 1.4rem;
+  color: var(--primary);
+  margin-bottom: 5px;
+  font-family: "Permanent Marker", cursive;
+  letter-spacing: 1px;
+}
+
+.company-name {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.job-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-tag {
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--primary);
+  border-radius: 15px;
+  font-size: 0.8rem;
+  border: 1px solid var(--primary);
+}
+
+/* Responsive Experience Section */
+@media (max-width: 768px) {
+  .experience-timeline::before {
+    left: 30px;
+  }
+
+  .experience-item {
+    flex-direction: column !important;
+    align-items: flex-start;
+    padding-left: 60px;
+  }
+
+  .experience-item:nth-child(even) {
+    flex-direction: column !important;
+  }
+
+  .experience-date {
+    flex: none;
+    width: auto;
+    margin-bottom: 15px;
+  }
+
+  .experience-date::after {
+    left: -45px !important;
+    right: auto !important;
+  }
+
+  .experience-card {
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .company-logo {
+    align-self: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .experience-item {
+    padding-left: 40px;
+  }
+
+  .experience-date::after {
+    left: -35px !important;
+  }
+
+  .experience-card {
+    padding: 20px;
+  }
+
+  .job-title {
+    font-size: 1.2rem;
+  }
+}
+/* Media Queries */
+@media (max-width: 992px) {
+  .hero-content {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .about-content {
+    flex-direction: column;
+  }
+
+  .contact-content {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none;
+  }
+
+  /* Fix hero section overlapping */
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 120px 0 60px;
+  }
+
+  .hero-content {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .glitch {
+    font-size: 3rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .wanted-poster {
+    width: 250px;
+    margin: 0 auto;
+  }
+
+  .nav-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--background);
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border-bottom: 2px solid var(--primary);
+    z-index: 10;
+  }
+
+  .nav-list.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+    margin-left: 0;
+    margin-right: 20px;
+    /* You can adjust margin-right as needed */
+  }
+
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  .about-stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Fade out developer text when scrolling/touching header */
+  .header {
+    transition: background-color 0.3s;
+  }
+
+  .header.scrolled ~ .hero .glitch {
+    opacity: 0.2;
+    transition: opacity 0.3s;
+  }
+
+  .hero .glitch {
+    transition: opacity 0.3s;
+  }
+}
+
+@media (max-width: 576px) {
+  .menu-toggle {
+    margin-right: 10px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .glitch {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    padding: 10px 20px;
+  }
+
+  .about-subtitle,
+  .skills-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .project-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .wanted-poster {
+    width: 220px;
+    padding: 15px;
+  }
+
+  .avatar-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .wanted-header {
+    font-size: 2rem;
+  }
+
+  .wanted-name {
+    font-size: 1.2rem;
+  }
+
+  /* Fix for custom cursor on mobile */
+  .cursor,
+  .cursor-follower {
+    display: none;
+  }
+}
+/* Media Queries */
+@media (max-width: 992px) {
+  .hero-content {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .about-content {
+    flex-direction: column;
+  }
+
+  .contact-content {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none;
+  }
+
+  /* Fix hero section overlapping */
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 120px 0 60px;
+  }
+
+  .hero-content {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .glitch {
+    font-size: 3rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .wanted-poster {
+    width: 250px;
+    margin: 0 auto;
+  }
+
+  .nav-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--background);
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border-bottom: 2px solid var(--primary);
+    z-index: 10;
+  }
+
+  .nav-list.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+    margin-left: 0;
+    margin-right: 100px;
+    /* You can adjust margin-right as needed */
+  }
+
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  .about-stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .menu-toggle {
+    margin-right: 10px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .glitch {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    padding: 10px 20px;
+  }
+
+  .about-subtitle,
+  .skills-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .project-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .wanted-poster {
+    width: 220px;
+    padding: 15px;
+  }
+
+  .avatar-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .wanted-header {
+    font-size: 2rem;
+  }
+
+  .wanted-name {
+    font-size: 1.2rem;
+  }
+
+  /* Fix for custom cursor on mobile */
+  .cursor,
+  .cursor-follower {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    margin-right: 4vw; /* Move it away from the right edge */
+  }
+}
+@media (max-width: 576px) {
+  .menu-toggle {
+    margin-right: 8vw; /* More space on smaller screens */
+  }
+}
+
+

@@ -1,4 +1,41 @@
+// Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
+  // Scroll Animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate")
+      }
+    })
+  }, observerOptions)
+
+  // Add animation classes to elements
+  const animateElements = [
+    { selector: ".section-header", class: "fade-in" },
+    { selector: ".about-image", class: "slide-in-left" },
+    { selector: ".about-text", class: "slide-in-right" },
+    { selector: ".project-card", class: "scale-in" },
+    { selector: ".skill-card", class: "rotate-in" },
+    { selector: ".blog-card", class: "fade-in" },
+    { selector: ".contact-card", class: "slide-in-left" },
+    { selector: ".contact-form-container", class: "slide-in-right" },
+    { selector: ".certificate-card", class: "fade-in" },
+  ]
+
+  animateElements.forEach(({ selector, class: className }) => {
+    const elements = document.querySelectorAll(selector)
+    elements.forEach((el, index) => {
+      el.classList.add(className)
+      el.style.transitionDelay = `${index * 0.1}s`
+      observer.observe(el)
+    })
+  })
+
   // Preloader
   setTimeout(() => {
     document.querySelector(".preloader").classList.add("hidden")
@@ -47,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Header scroll effect
   const header = document.querySelector(".header")
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
+    if (window.scrollY > 30) {
       header.classList.add("scrolled")
     } else {
       header.classList.remove("scrolled")
@@ -110,21 +147,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Animate skill power levels
   const powerLevels = document.querySelectorAll(".power-level")
 
-  const observerOptions = {
-    threshold: 0.5,
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const level = entry.target.getAttribute("data-level")
-        entry.target.style.width = `${level}%`
-      }
-    })
-  }, observerOptions)
+  const skillsObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const level = entry.target.getAttribute("data-level")
+          setTimeout(() => {
+            entry.target.style.width = `${level}%`
+          }, 300)
+        }
+      })
+    },
+    { threshold: 0.5 },
+  )
 
   powerLevels.forEach((level) => {
-    observer.observe(level)
+    skillsObserver.observe(level)
   })
 
   // Back to top button
@@ -145,6 +183,70 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
+  // Certificate Carousel
+  const certificates = document.querySelectorAll(".certificate-card")
+  const indicators = document.querySelectorAll(".indicator")
+  const prevBtn = document.getElementById("prevCert")
+  const nextBtn = document.getElementById("nextCert")
+  let currentCert = 0
+
+  function showCertificate(index) {
+    // Remove all classes
+    certificates.forEach((cert, i) => {
+      cert.classList.remove("active", "prev", "next")
+      indicators[i].classList.remove("active")
+
+      if (i === index) {
+        cert.classList.add("active")
+        indicators[i].classList.add("active")
+      } else if (i === index - 1 || (index === 0 && i === certificates.length - 1)) {
+        cert.classList.add("prev")
+      } else if (i === index + 1 || (index === certificates.length - 1 && i === 0)) {
+        cert.classList.add("next")
+      }
+    })
+  }
+
+  function nextCertificate() {
+    currentCert = (currentCert + 1) % certificates.length
+    showCertificate(currentCert)
+  }
+
+  function prevCertificate() {
+    currentCert = (currentCert - 1 + certificates.length) % certificates.length
+    showCertificate(currentCert)
+  }
+
+  // Event listeners for certificate navigation
+  if (nextBtn && prevBtn) {
+    nextBtn.addEventListener("click", nextCertificate)
+    prevBtn.addEventListener("click", prevCertificate)
+
+    // Indicator clicks
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener("click", () => {
+        currentCert = index
+        showCertificate(currentCert)
+      })
+    })
+
+    // Auto-advance certificates every 5 seconds
+    setInterval(nextCertificate, 5000)
+
+    // Initialize first certificate
+    showCertificate(0)
+  }
+
+  // Add smooth scrolling for certificate navigation
+  document.querySelectorAll('a[href="#certificates"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault()
+      document.getElementById("certificates").scrollIntoView({
+        behavior: "smooth",
+      })
+    })
+  })
+
   // Form submission
   const contactForm = document.getElementById("contact-form")
 
@@ -152,19 +254,34 @@ document.addEventListener("DOMContentLoaded", () => {
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault()
 
+      // Get form data
       const formData = new FormData(contactForm)
       const name = formData.get("name")
       const email = formData.get("email")
       const message = formData.get("message")
 
-      
+      // Here you would typically send the data to a server
+      // For now, we'll just show a One Piece themed success message
       alert(
         `Thanks ${name}! Your message has been received and added to our log pose. We'll navigate to your inbox at ${email} soon! Yohohoho!`,
       )
 
+      // Reset the form
       contactForm.reset()
     })
   }
 
+  // Set current year in footer
   document.getElementById("current-year").textContent = new Date().getFullYear()
+
+  // Handle touch events for mobile
+  document.querySelector(".header").addEventListener("touchstart", () => {
+    const glitch = document.querySelector(".glitch")
+    glitch.style.opacity = "0.2"
+  })
+
+  document.querySelector(".header").addEventListener("touchend", () => {
+    const glitch = document.querySelector(".glitch")
+    glitch.style.opacity = "1"
+  })
 })
