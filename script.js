@@ -184,57 +184,65 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   // Certificate Carousel
-  const certificates = document.querySelectorAll(".certificate-card")
-  const indicators = document.querySelectorAll(".indicator")
-  const prevBtn = document.getElementById("prevCert")
-  const nextBtn = document.getElementById("nextCert")
-  let currentCert = 0
+
+
+  const certificates = document.querySelectorAll('.certificate-card');
+  const prevBtn = document.getElementById('prevCert');
+  const nextBtn = document.getElementById('nextCert');
+  const indicators = document.querySelectorAll('.indicator');
+  let currentCert = 0;
 
   function showCertificate(index) {
-    // Remove all classes
     certificates.forEach((cert, i) => {
-      cert.classList.remove("active", "prev", "next")
-      indicators[i].classList.remove("active")
-
-      if (i === index) {
-        cert.classList.add("active")
-        indicators[i].classList.add("active")
-      } else if (i === index - 1 || (index === 0 && i === certificates.length - 1)) {
-        cert.classList.add("prev")
-      } else if (i === index + 1 || (index === certificates.length - 1 && i === 0)) {
-        cert.classList.add("next")
-      }
-    })
+      cert.style.display = i === index ? 'block' : 'none';
+    });
+    indicators.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
   }
 
   function nextCertificate() {
-    currentCert = (currentCert + 1) % certificates.length
-    showCertificate(currentCert)
+    currentCert = (currentCert + 1) % certificates.length;
+    showCertificate(currentCert);
   }
 
   function prevCertificate() {
-    currentCert = (currentCert - 1 + certificates.length) % certificates.length
-    showCertificate(currentCert)
+    currentCert = (currentCert - 1 + certificates.length) % certificates.length;
+    showCertificate(currentCert);
   }
 
-  // Event listeners for certificate navigation
   if (nextBtn && prevBtn) {
-    nextBtn.addEventListener("click", nextCertificate)
-    prevBtn.addEventListener("click", prevCertificate)
+    nextBtn.addEventListener('click', nextCertificate);
+    prevBtn.addEventListener('click', prevCertificate);
+    indicators.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        currentCert = i;
+        showCertificate(currentCert);
+      });
+    });
+    showCertificate(currentCert);
+  }
 
-    // Indicator clicks
-    indicators.forEach((indicator, index) => {
-      indicator.addEventListener("click", () => {
-        currentCert = index
-        showCertificate(currentCert)
-      })
-    })
-
-    // Auto-advance certificates every 5 seconds
-    setInterval(nextCertificate, 5000)
-
-    // Initialize first certificate
-    showCertificate(0)
+  // Swipe support for mobile
+  let touchStartX = null;
+  const certContainer = document.querySelector('.certificate-container');
+  if (certContainer) {
+    certContainer.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    certContainer.addEventListener('touchend', function(e) {
+      if (touchStartX === null) return;
+      let touchEndX = e.changedTouches[0].screenX;
+      let diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > 50) {
+        if (diff < 0) {
+          nextCertificate();
+        } else {
+          prevCertificate();
+        }
+      }
+      touchStartX = null;
+    });
   }
 
   // Add smooth scrolling for certificate navigation

@@ -91,7 +91,23 @@ body {
   color: var(--foreground);
   line-height: 1.6;
   overflow-x: hidden;
+    position: relative;
 }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, rgba(0,0,0,0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.07) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
 
 a {
   text-decoration: none;
@@ -546,14 +562,7 @@ h6 {
 }
 
 .wave {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23f0f0f0" opacity="0.1"/></svg>');
-  background-size: cover;
-  background-repeat: no-repeat;
+  display: none;
 }
 
 .wave:nth-child(1) {
@@ -784,7 +793,7 @@ h6 {
 }
 
 .section-divider path {
-  fill: var(--background);
+  display: none;
 }
 
 .section-divider.flip {
@@ -1017,6 +1026,7 @@ h6 {
 .fruit-icon {
   position: relative;
   z-index: 1;
+
   font-size: 2rem;
   color: var(--primary);
 }
@@ -1478,7 +1488,7 @@ h6 {
   .hero-content {
     flex-direction: column-reverse;
     gap: 30px;
-  }
+  } 
 
   .hero-text {
     text-align: center;
@@ -1646,7 +1656,7 @@ h6 {
   .hero-content {
     flex-direction: column-reverse;
     gap: 30px;
-  } 
+  }
 
   .hero-text {
     text-align: center;
@@ -2674,6 +2684,14 @@ h6 {
   .menu-toggle {
     margin-right: 8vw; /* More space on smaller screens */
   }
+}
+
+.skill-icon {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  display: block;
+  margin: auto;
 }
 
 
